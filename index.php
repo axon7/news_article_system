@@ -1,26 +1,21 @@
 <?php
-include ('templates/header.php');
-include_once 'config/database.php';
 
-$db = new Database();
-$database = $db-> connect();
+require_once 'app/News.php';
+
+$news = new News();
+echo $news-> test;
 
 
 ?>
 
 <form method="POST" action="index.php">
-    <p>News form</p>
-    <label for="name">News name</label>
-    <input id="name" type="text" name="repair_type"/>
+    <label for="title">News title</label>
+    <input id="title" type="text" name="title"/>
     <br>
-    <label>Bike model</label>
-    <input class="form-control" type="text" name="bike_model" />
+    <label for="text">News text</label>
+    <textarea id="text" name="text">Write news content</textarea>
     <br>
-    <label>First name</label>
-    <input class="form-control"  type="text" name="firstname"/>
-    <br>
-    <label>Last name</label>
-    <input class="form-control"  type="text" name="lastname"/>
-    <br>
-    <button class="btn btn-primary" type="submit">SUBMIT!</button>
+    <label>Authors</label>
+
+    <button type="submit">SUBMIT!</button>
 </form>
