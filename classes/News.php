@@ -8,7 +8,13 @@ class News extends Database {
     public $test = 'halo';
 
 
-    public function getNews(){
+    public function getNewsById($id){
+        $sql = 'SELECT * FROM articles WHERE id = ?';
+        $stmt = $this->connect()->prepare($sql);
+
+        $stmt->execute([$id]);
+        $news = $stmt->fetchAll();
+        print_r($news);
 
     }
 

@@ -3,10 +3,10 @@ class Database
 {
     private $host = 'localhost';
     private $dbname = 'news_article_system';
-    private $username = 'kuba';
-    private $password = 'kuba';
+    private $username = 'root';
+    private $password = '';
 
-    private function connect()
+    protected function connect()
     {
         $pdo = null;
         try {
