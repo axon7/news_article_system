@@ -1,24 +1,36 @@
 <?php
 
-require_once 'config/database.php';
+require_once '../config/database.php';
 
 class News extends Database {
-
-
-    public $test = 'halo';
-
 
     public function getNewsById($id){
         $sql = 'SELECT * FROM articles WHERE id = ?';
         $stmt = $this->connect()->prepare($sql);
 
         $stmt->execute([$id]);
-        $news = $stmt->fetchAll();
-        print_r($news);
-
+        return $stmt->fetchAll();
     }
 
-    public function addNews(){
+    public function getAllAuthors(){
+        $sql = 'SELECT * FROM authors';
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        return $stmt -> fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function addNews($title, $text, $author_id){
+        $conn = $this->connect();
+        $sql = 'INSERT INTO articles (title, text) VALUES (?, ?)';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$title, $text]);
+
+        $article_id = $conn->lastInsertId('id');
+        $sql = 'INSERT INTO article_authors (author_id, article_id) VALUES (?, ?)';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$author_id, $article_id]);
+
+
 
     }
     public function getArticlesOfAuthor(){
