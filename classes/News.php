@@ -33,7 +33,12 @@ class News extends Database {
 
 
     }
-    public function getArticlesOfAuthor(){
+    public function getArticlesOfAuthor($author_id){
+        $conn = $this->connect();
+        $sql = 'SELECT * FROM article_authors WHERE author_id=?';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$author_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
 
