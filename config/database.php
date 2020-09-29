@@ -6,7 +6,7 @@ class Database
     private $username = 'root';
     private $password = '';
 
-    public function connect()
+    protected function connect()
     {
         $pdo = null;
         try {

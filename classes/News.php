@@ -1,13 +1,13 @@
 <?php
 
-require_once '../config/database.php';
+
+require_once (__DIR__ . '/../config/database.php');
 
 class News extends Database {
 
     public function getNewsById($id){
         $sql = 'SELECT * FROM articles WHERE id = ?';
         $stmt = $this->connect()->prepare($sql);
-
         $stmt->execute([$id]);
         return $stmt->fetchAll();
     }
@@ -29,9 +29,6 @@ class News extends Database {
         $sql = 'INSERT INTO article_authors (author_id, article_id) VALUES (?, ?)';
         $stmt = $conn->prepare($sql);
         $stmt->execute([$author_id, $article_id]);
-
-
-
     }
     public function getArticlesOfAuthor($author_id){
         $conn = $this->connect();
@@ -39,10 +36,9 @@ class News extends Database {
         $stmt = $conn->prepare($sql);
         $stmt->execute([$author_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
     }
 
-    public function getTop3(){
+    public function getTopThreeAuthors(){
 
     }
 
