@@ -11,8 +11,6 @@ if(isset($_GET['id'])){
     $allNewsByAuthor = $news->getArticlesOfAuthor($_GET['id']);
 
 }
-//var_dump($newsByID);
-
 
 echo json_encode($allNewsByAuthor);
 
