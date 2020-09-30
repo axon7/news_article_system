@@ -19,11 +19,11 @@ class News extends Database {
         return $stmt -> fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function addNews($title, $text, $author_id){
+    public function addNews($title, $text, $author_id, $created_at){
         $conn = $this->connect();
-        $sql = 'INSERT INTO articles (title, text) VALUES (?, ?)';
+        $sql = 'INSERT INTO articles (title, text, created_at) VALUES (?, ?, ?)';
         $stmt = $conn->prepare($sql);
-        $stmt->execute([$title, $text]);
+        $stmt->execute([$title, $text, $created_at]);
 
         $article_id = $conn->lastInsertId('id');
         $sql = 'INSERT INTO article_authors (author_id, article_id) VALUES (?, ?)';

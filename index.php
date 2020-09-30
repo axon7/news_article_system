@@ -1,7 +1,6 @@
 <?php
 
 require_once 'classes/News.php';
-
 $news = new News();
 $authors = $news->getAllAuthors();
 
@@ -9,12 +8,12 @@ if(!empty($_POST)) {
     $text = isset($_POST['text']) ? $_POST['text'] : '';;
     $title = isset($_POST['title']) ? $_POST['title'] : '';
     $author_id = isset($_POST['author_id']) ? $_POST['author_id'] : '';
-    $news->addNews($title, $text, $author_id);
-    header('Location: index.php');
+    $created_at = date('Y-m-d H:i:s');
 
+    $news->addNews($title, $text, $author_id, $created_at);
+    header('Location: index.php');
 }
 ?>
-
 
 
 <!--form to add or edit news articles-->
