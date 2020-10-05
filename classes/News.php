@@ -1,6 +1,4 @@
 <?php
-
-
 require_once (__DIR__ . '/../config/database.php');
 
 class News extends Database {
@@ -40,6 +38,13 @@ class News extends Database {
 
     public function getTopThreeAuthors(){
 
+    }
+
+    public function getAllNews(){
+        $sql = 'SELECT * FROM articles';
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        return $stmt -> fetchAll(PDO::FETCH_ASSOC);
     }
 
 

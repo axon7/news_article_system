@@ -4,6 +4,7 @@ require_once 'classes/News.php';
 $news = new News();
 $authors = $news->getAllAuthors();
 
+
 if(!empty($_POST)) {
     $text = isset($_POST['text']) ? $_POST['text'] : '';;
     $title = isset($_POST['title']) ? $_POST['title'] : '';
@@ -15,6 +16,7 @@ if(!empty($_POST)) {
 }
 ?>
 
+<a href="show_news.php">SHOW NEWS</a>
 
 <!--form to add or edit news articles-->
 <form method="POST" action="">
