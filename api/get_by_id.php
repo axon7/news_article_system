@@ -2,14 +2,18 @@
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
-include_once '../models/News.php';
-$news = new News();
+require_once '../models/News.php';
+require_once '../config/database.php';
+
+$database = new Database();
+$db = $database->connect();
+$news = new News($db);
+
 
 if(isset($_GET['id'])){
     $newsByID = $news->getNewsById($_GET['id']);
 
 }
-//var_dump($newsByID);
 
 
 echo json_encode($newsByID);

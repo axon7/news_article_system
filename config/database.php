@@ -6,13 +6,13 @@ class Database
     private $username = 'root';
     private $password = '';
 
-    protected function connect()
+    public function connect()
     {
         $pdo = null;
         try {
             $pdo = new PDO('mysql:host='. $this->host . ';dbname='. $this->dbname, $this->username, $this->password);
             $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             $err_msg = $e->getMessage();
             echo 'Połączenie nie mogło zostać utworzone: ' . $err_msg;
         }

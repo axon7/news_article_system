@@ -1,7 +1,11 @@
 <?php
 
 require_once 'models/News.php';
-$news = new News();
+require_once "config/database.php";
+
+$database = new Database();
+$db = $database->connect();
+$news = new News($db);
 $authors = $news->getAllAuthors();
 
 

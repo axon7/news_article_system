@@ -1,24 +1,29 @@
 <?php
-require_once (__DIR__ . '/../config/database.php');
 
-class News extends Database {
+class News {
+
+    private $connection;
+
+    public function __construct($db){
+       $this->connection = $db;
+    }
 
     public function getNewsById($id){
         $sql = 'SELECT * FROM articles WHERE id = ?';
-        $stmt = $this->connect()->prepare($sql);
+        $stmt = $this->connection->prepare($sql);
         $stmt->execute([$id]);
         return $stmt->fetchAll();
     }
 
     public function getAllAuthors(){
         $sql = 'SELECT * FROM authors';
-        $stmt = $this->connect()->prepare($sql);
+        $stmt = $this->connection->prepare($sql);
         $stmt->execute();
         return $stmt -> fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function addNews($title, $text, $author_id, $created_at){
-        $conn = $this->connect();
+        $conn = $this->connection;
         $sql = 'INSERT INTO articles (title, text, created_at) VALUES (?, ?, ?)';
         $stmt = $conn->prepare($sql);
         $stmt->execute([$title, $text, $created_at]);
@@ -29,15 +34,13 @@ class News extends Database {
         $stmt->execute([$author_id, $article_id, $created_at]);
     }
     public function getArticlesOfAuthor($author_id){
-        $conn = $this->connect();
         $sql = 'SELECT * FROM article_authors WHERE author_id=?';
-        $stmt = $conn->prepare($sql);
+        $stmt = $this->connection->prepare($sql);
         $stmt->execute([$author_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getTopThreeAuthors($start_of_week, $end_of_week){
-        $conn = $this->connect();
         $sql = 'SELECT name, COUNT(*) as NumberOfNews
                 FROM article_authors
                 JOIN authors
@@ -45,14 +48,14 @@ class News extends Database {
                 WHERE article_authors.created_at BETWEEN ? AND ? + INTERVAL 1 DAY
                 GROUP BY name
                 LIMIT 3';
-        $stmt = $conn->prepare($sql);
+        $stmt = $this->connection->prepare($sql);
         $stmt->execute([$start_of_week, $end_of_week]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getAllNews(){
         $sql = 'SELECT * FROM articles';
-        $stmt = $this->connect()->prepare($sql);
+        $stmt = $this->connection->prepare($sql);
         $stmt->execute();
         return $stmt -> fetchAll(PDO::FETCH_ASSOC);
     }

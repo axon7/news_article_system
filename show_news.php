@@ -1,8 +1,12 @@
 <?php
 
 
-require_once 'classes/News.php';
-$news = new News();
+require_once 'models/News.php';
+require_once 'config/database.php';
+
+$database = new Database();
+$db = $database->connect();
+$news = new News($db);
 $allNews = $news->getAllNews();
 
 ?>
