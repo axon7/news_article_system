@@ -24,9 +24,9 @@ class News extends Database {
         $stmt->execute([$title, $text, $created_at]);
 
         $article_id = $conn->lastInsertId('id');
-        $sql = 'INSERT INTO article_authors (author_id, article_id) VALUES (?, ?)';
+        $sql = 'INSERT INTO article_authors (author_id, article_id, created_at) VALUES (?, ?, ?)';
         $stmt = $conn->prepare($sql);
-        $stmt->execute([$author_id, $article_id]);
+        $stmt->execute([$author_id, $article_id, $created_at]);
     }
     public function getArticlesOfAuthor($author_id){
         $conn = $this->connect();
@@ -36,8 +36,18 @@ class News extends Database {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getTopThreeAuthors(){
-
+    public function getTopThreeAuthors($start_of_week, $end_of_week){
+        $conn = $this->connect();
+        $sql = 'SELECT name, COUNT(*) as NumberOfNews
+                FROM article_authors
+                JOIN authors
+	            ON article_authors.author_id = authors.id
+                WHERE article_authors.created_at BETWEEN ? AND ? + INTERVAL 1 DAY
+                GROUP BY name
+                LIMIT 3';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$start_of_week, $end_of_week]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getAllNews(){

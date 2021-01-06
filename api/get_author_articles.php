@@ -2,7 +2,7 @@
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
-require_once '../classes/News.php';
+require_once '../models/News.php';
 
 $news = new News();
 

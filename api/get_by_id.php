@@ -2,7 +2,7 @@
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
-include_once '../classes/News.php';
+include_once '../models/News.php';
 $news = new News();
 
 if(isset($_GET['id'])){

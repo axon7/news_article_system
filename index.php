@@ -1,6 +1,6 @@
 <?php
 
-require_once 'classes/News.php';
+require_once 'models/News.php';
 $news = new News();
 $authors = $news->getAllAuthors();
 

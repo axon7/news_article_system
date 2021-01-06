@@ -2,22 +2,13 @@
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
-require_once '../classes/News.php';
+require_once '../models/News.php';
 
 $news = new News();
 
-if(isset($_GET['id'])){
-    echo $_GET['id'];
-    $allNewsByAuthor = $news->getArticlesOfAuthor($_GET['id']);
+$start_of_week = date("Y-m-d", strtotime("last week monday"));
+$end_of_week = date("Y-m-d", strtotime("last week sunday"));
+//echo $start_of_week . " - " . $end_of_week;
 
-}
-
-function last_week(){
-    $start_week = date("Y-m-d", strtotime("last week monday"));
-    $end_week = date("Y-m-d", strtotime("last week sunday"));
-    echo $start_week.' '.$end_week ;
-}
-//var_dump($newsByID);
-
-
-echo json_encode($allNewsByAuthor);
+$topAuthors = $news-> getTopThreeAuthors($start_of_week, $end_of_week);
+echo json_encode($topAuthors);
