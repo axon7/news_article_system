@@ -24,17 +24,20 @@ class News {
 
     public function addNews($title, $text, $author_id, $created_at){
         $conn = $this->connection;
-        $sql = 'INSERT INTO articles (title, text, created_at) VALUES (?, ?, ?)';
+        $sql = 'INSERT INTO articles (title, text, created_at) 
+                VALUES (?, ?, ?)';
         $stmt = $conn->prepare($sql);
         $stmt->execute([$title, $text, $created_at]);
 
         $article_id = $conn->lastInsertId('id');
-        $sql = 'INSERT INTO article_authors (author_id, article_id, created_at) VALUES (?, ?, ?)';
+        $sql = 'INSERT INTO article_authors (author_id, article_id, created_at)
+                VALUES (?, ?, ?)';
         $stmt = $conn->prepare($sql);
         $stmt->execute([$author_id, $article_id, $created_at]);
     }
     public function getArticlesOfAuthor($author_id){
-        $sql = 'SELECT * FROM article_authors WHERE author_id=?';
+        $sql = 'SELECT * FROM article_authors 
+                WHERE author_id=?';
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([$author_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
