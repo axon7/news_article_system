@@ -41,12 +41,13 @@ class News {
     }
 
     public function getTopThreeAuthors($start_of_week, $end_of_week){
-        $sql = 'SELECT name, COUNT(*) as NumberOfNews
+        $sql = 'SELECT name, COUNT(*) as newsCount
                 FROM article_authors
                 JOIN authors
 	            ON article_authors.author_id = authors.id
                 WHERE article_authors.created_at BETWEEN ? AND ? + INTERVAL 1 DAY
                 GROUP BY name
+                ORDER BY newsCount desc
                 LIMIT 3';
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([$start_of_week, $end_of_week]);
