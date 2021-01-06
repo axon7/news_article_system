@@ -35,6 +35,7 @@ class News {
         $stmt = $conn->prepare($sql);
         $stmt->execute([$author_id, $article_id, $created_at]);
     }
+
     public function getArticlesOfAuthor($author_id){
         $sql = 'SELECT * FROM article_authors 
                 WHERE author_id=?';
@@ -63,7 +64,4 @@ class News {
         $stmt->execute();
         return $stmt -> fetchAll(PDO::FETCH_ASSOC);
     }
-
-
-
 }
